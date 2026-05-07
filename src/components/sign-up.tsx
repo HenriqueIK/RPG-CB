@@ -24,22 +24,22 @@ export function SignupForm({
         </div>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="name">Username</FieldLabel>
-          <Input id="name" type="text" placeholder="John Doe" required />
+          <Input id="name" type="text" placeholder="Joseph Nobody" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" type="email" placeholder="email@exemplo.com" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="password">Password</FieldLabel>
-          <Input id="password" type="password" required />
+          <Input id="password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
           <FieldDescription>
             A senha precisa ter pelo menos 8 caracteres.
           </FieldDescription>
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="confirm-password">Confirm Password</FieldLabel>
-          <Input id="confirm-password" type="password" required />
+          <Input id="confirm-password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
           <FieldDescription>Confirme a senha</FieldDescription>
         </Field>
         <Field>

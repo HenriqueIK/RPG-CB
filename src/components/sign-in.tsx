@@ -24,7 +24,7 @@ export function SigninForm({
         </div>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" type="email" placeholder="email@example.com" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
         </Field>
         <Field>
           <div className="flex items-center">
@@ -36,7 +36,7 @@ export function SigninForm({
               Esqueceu a Senha?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input id="password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
         </Field>
         <Field>
           <Button type="submit">Entrar</Button>

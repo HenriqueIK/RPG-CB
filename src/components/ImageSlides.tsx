@@ -14,7 +14,7 @@ export default function ImageSlider() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % imagens.length)
-    }, 7000) // troca a cada 7s
+    }, 7000) // troca a cada 7 segundos
 
     return () => clearInterval(interval)
   }, [])

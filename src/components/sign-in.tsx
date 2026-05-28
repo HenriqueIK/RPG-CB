@@ -10,25 +10,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 
-export function SigninForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
-  const [loading, setLoading] = useState(false)
-  
-    const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-  
-    setLoading(true)
-  
-    // simulando um login so para testar o botao, e dura 2 segundos
-    setTimeout(() => {
-        setLoading(false)
-      }, 2000)
-  }
+import Loader from "./shared/Loader";
+
+export function SigninForm({className,...props}: React.ComponentProps<"form">) {
+
+  const isLoading = false;
   
   return (
-    <form onSubmit={handleSubmit} className={cn("flex flex-col gap-6", className)} {...props}>
+    <form //onSubmit={handleSubmit} 
+    className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold text-amber-50">Faça login com sua conta</h1>
@@ -53,8 +43,12 @@ export function SigninForm({
           <Input id="password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
         </Field>
         <Field>
-          <Button type="submit" disabled={loading}>
-            {loading ? "Carregando..." : "Login"}
+          <Button type="submit" className="bg-[#0051cb]">
+            {isLoading ? (
+              <div className="flex-center gap-2">
+                <Loader /> Carregando...
+              </div>
+            ): "Criar Conta"}
           </Button>
         </Field>
       </FieldGroup>

@@ -4,8 +4,10 @@ import img1 from "/assets/img/545821.jpg"
 import img2 from "/assets/img/1204665_01.jpg"
 import img3 from "/assets/img/1229131.jpg"
 import img4 from "/assets/img/1302137.jpg"
+import img5 from "/assets/img/1320963.jpg"
+import img6 from "/assets/img/1384817_01.jpg"
 
-const imagens = [img1, img2, img3, img4]
+const imagens = [img1, img2, img3, img4, img5, img6]
 
 export default function ImageSlider() {
   const [index, setIndex] = useState(0)

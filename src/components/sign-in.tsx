@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-
+import { Link } from "react-router-dom";
 import Loader from "./shared/Loader";
 
 export function SigninForm({className,...props}: React.ComponentProps<"form">) {
@@ -48,8 +48,15 @@ export function SigninForm({className,...props}: React.ComponentProps<"form">) {
               <div className="flex-center gap-2">
                 <Loader /> Carregando...
               </div>
-            ): "Criar Conta"}
+            ): "Fazer Login"}
           </Button>
+        </Field>
+        <Field>
+          <p className="text-[#c3bbc9] ml-auto text-sm underline-offset-4">
+            Não possui uma conta?
+            <Link to = "/sign-up" className="text-primary-500
+            text-small-semibold ml-1">Criar conta</Link>
+          </p>
         </Field>
       </FieldGroup>
     </form>

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import{
   Field,
   FieldDescription,
@@ -18,11 +19,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SignupValidation } from "@/lib/validation";
-import { createUserAccount } from "@/lib/appwrite/api";
+
+import { useCreateUserAccountMutation } from "@/lib/react-query/queriesAndMutations";
 
 export function SignupForm({ className,...props}: React.ComponentProps<"form">) {
 
-  const isLoading = false;
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
 
   const form = useForm<z.infer<typeof SignupValidation>>({
   resolver: zodResolver(SignupValidation),
@@ -36,11 +38,15 @@ export function SignupForm({ className,...props}: React.ComponentProps<"form">) 
     });
 
   async function onSubmit(values: z.infer<typeof SignupValidation>){
-    const { confirmPassword, ...userData} = values; // ta dando erro aqui ver oq tem que colocar depois
+    const { confirmPassword, ...userData} = values;
 
-    const newUser = await createUserAccount(userData);
+    const newUser = await createUserAccount(userData); // adicionei isso para verificar a senha
 
-    console.log(newUser)
+    if(!newUser){
+      return toast.warning("Falha ao criar conta! Tente novamente")
+    }
+
+    // const session = await signInAccount()
   }
   return (
     <form {...props} onSubmit={form.handleSubmit(onSubmit)}>
@@ -96,7 +102,7 @@ export function SignupForm({ className,...props}: React.ComponentProps<"form">) 
         </Field>
         <Field>
           <Button type="submit" className="bg-[#0051cb]">
-            {isLoading ? (
+            {isCreatingUser ? (
               <div className="flex-center gap-2">
                 <Loader /> Carregando...
               </div>

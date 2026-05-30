@@ -16,7 +16,9 @@ import { Link } from "react-router-dom";
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { SignupValidation } from "@/lib/validation";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 export function SignupForm({ className,...props}: React.ComponentProps<"form">) {
 
@@ -29,11 +31,19 @@ export function SignupForm({ className,...props}: React.ComponentProps<"form">) 
     username: "",
     email: "",
     password: "",
-      },
+    confirmPassword: "",
+    },
     });
 
+  async function onSubmit(values: z.infer<typeof SignupValidation>){
+    const { confirmPassword, ...userData} = values; // ta dando erro aqui ver oq tem que colocar depois
+
+    const newUser = await createUserAccount(userData);
+
+    console.log(newUser)
+  }
   return (
-    <form {...form}>
+    <form {...props} onSubmit={form.handleSubmit(onSubmit)}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
           <h1 className="text-2xl font-bold text-[#c3bbc9]">Crie sua conta</h1>
@@ -42,23 +52,47 @@ export function SignupForm({ className,...props}: React.ComponentProps<"form">) 
           </p>
         </div>
         <Field>
+          <FieldLabel className="text-[#c3bbc9]" htmlFor="name">Nome</FieldLabel>
+          <Input id="name" type="text" placeholder="Carlos" required className="placeholder:text-[#7a7a8c]
+           text-[#c3bbc9]" {...form.register("name")}/>
+          {form.formState.errors.name && (
+            <p className="text-red-500 text-sm">{form.formState.errors.name.message}</p>
+          )}
+        </Field>
+        <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="name">Nome de Usuário</FieldLabel>
-          <Input id="name" type="text" placeholder="Joseph Nobody" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
+          <Input id="name" type="text" placeholder="Cavaleiro Carlos" required className="placeholder:text-[#7a7a8c]
+           text-[#c3bbc9]" {...form.register("username")}/>
+          {form.formState.errors.username && (
+            <p className="text-red-500 text-sm">{form.formState.errors.username.message}</p>
+          )}
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="email@exemplo.com" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
+          <Input id="email" type="email" placeholder="email@exemplo.com" required className="placeholder:text-[#7a7a8c]
+           text-[#c3bbc9]" {...form.register("email")}/>
+          {form.formState.errors.email && (
+            <p className="text-red-500 text-sm">{form.formState.errors.email.message}</p>
+          )}
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="password">Senha</FieldLabel>
-          <Input id="password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
+          <Input id="password" type="password" required className="placeholder:text-[#7a7a8c]
+           text-[#c3bbc9]" {...form.register("password")}/>
+          {form.formState.errors.password && (
+            <p className="text-red-500 text-sm">{form.formState.errors.password.message}</p>
+          )}
           <FieldDescription>
             A senha precisa ter pelo menos 8 caracteres.
           </FieldDescription>
         </Field>
         <Field>
           <FieldLabel className="text-[#c3bbc9]" htmlFor="confirm-password">Confirme a Senha</FieldLabel>
-          <Input id="confirm-password" type="password" required className="placeholder:text-[#7a7a8c] text-[#c3bbc9]"/>
+          <Input id="confirm-password" type="password" required className="placeholder:text-[#7a7a8c]
+           text-[#c3bbc9]" {...form.register("confirmPassword")}/>
+          {form.formState.errors.confirmPassword && (
+            <p className="text-red-500 text-sm">{form.formState.errors.confirmPassword.message}</p>
+          )}
         </Field>
         <Field>
           <Button type="submit" className="bg-[#0051cb]">

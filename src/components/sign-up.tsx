@@ -20,11 +20,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SignupValidation } from "@/lib/validation";
 
-import { useCreateUserAccountMutation } from "@/lib/react-query/queriesAndMutations";
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 
 export function SignupForm({ className,...props}: React.ComponentProps<"form">) {
 
-  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccountMutation();
+  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
+
+  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount;
 
   const form = useForm<z.infer<typeof SignupValidation>>({
   resolver: zodResolver(SignupValidation),
@@ -46,7 +48,15 @@ export function SignupForm({ className,...props}: React.ComponentProps<"form">) 
       return toast.warning("Falha ao criar conta! Tente novamente")
     }
 
-    // const session = await signInAccount()
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    })
+
+    if(!session){
+      return toast.warning("Falha ao fazer Login! Tente novamente")
+    }
+
   }
   return (
     <form {...props} onSubmit={form.handleSubmit(onSubmit)}>
